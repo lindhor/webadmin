@@ -16,6 +16,16 @@
 #   notify: restart ajenti
 #   when: ajenti.install
 
+- name: create Ajenti configuration directory
+  file:
+    path: /etc/ajenti
+    state: directory
+
+- name: create Ajenti configuration file
+  template:
+    src: config.yml.j2
+    dest: /etc/ajenti/config.yml
+
 - name: install Ajenti v1
   pip:
     name: "{{ item }}"
