@@ -1,0 +1,18 @@
+---
+- name: download rpm to use Ajenti repo
+  get_url:
+    url: "http://repo.ajenti.org/ajenti-repo-{{ ajenti.version }}.noarch.rpm"
+    dest: "/root/ajenti-repo-{{ ajenti.version }}.noarch.rpm"
+
+- name: install Ajenti repo
+  yum:
+    name: /root/ajenti-repo-{{ ajenti.version }}.noarch.rpm
+    state: present
+
+- name: install Ajenti
+  yum:
+    name: ajenti
+    state: present
+  notify: restart ajenti
+  when: ajenti.install
+  

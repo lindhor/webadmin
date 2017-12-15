@@ -1,0 +1,14 @@
+---
+- name: Create folders
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - "{{ awx_folder }}/projects"
+    - "{{ awx_folder }}/inventories"
+
+- name: Install AWX
+  include_tasks: install/main.yml
+
+- name: Configure AWX
+  include_tasks: config/main.yml

@@ -1,0 +1,13 @@
+---
+- name: Per-user group creation
+  group:
+    name: "{{ item.username }}"
+  with_items: "{{ addusers.userlist }}"
+
+- name: Add users
+  user:
+    name: "{{ item.username }}"
+    group: "{{ item.primary_group }}"
+    groups: "{{ item.groups | default([]) }}"
+    password: "{{ item.password }}"
+  with_items: "{{ addusers.userlist }}"

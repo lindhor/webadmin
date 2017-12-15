@@ -1,0 +1,12 @@
+---
+- name: Delete demo organization
+  uri:
+    url: "http://localhost:{{ awx_web_port }}/api/v2/organizations/Default/"
+    method: DELETE
+    status_code: 204,404
+    headers:
+      Content-Type: application/json
+      Authorization: "Token {{ auth.json.token }}"
+  register: delete_org
+  changed_when: delete_org.status == 204
+  failed_when: delete_org.status != 204 and delete_org.status != 404

@@ -1,0 +1,32 @@
+---
+- include_tasks: resource.yml
+  vars:
+    resource:
+      name: Basalt organization
+      post_path: organizations
+      put_path: organizations/Basalt
+      body:
+        name: Basalt
+      register: org
+
+- include_tasks: resource.yml
+  vars:
+    resource:
+      name: Default inventory
+      post_path: inventories
+      put_path: inventories/Default++Basalt
+      body:
+        name: Default
+        organization: "{{ org.json.id }}"
+      register: inventory
+
+- include_tasks: resource.yml
+  vars:
+    resource:
+      name: Default host
+      post_path: hosts
+      put_path: hosts/localhost++Default++Basalt
+      body:
+        name: localhost
+        inventory: "{{ inventory.json.id }}"
+        variables: "---\nansible_connection: local"

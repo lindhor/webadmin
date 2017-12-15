@@ -1,0 +1,77 @@
+---
+- name: Start postgres
+  docker_container:
+    name: awx_postgres
+    image: "{{ awx_postgres_image }}:{{ awx_postgres_version }}"
+    env:
+      POSTGRES_USER: "{{ awx_postgres_user }}"
+      POSTGRES_PASSWORD: "{{ awx_postgres_pass }}"
+      POSTGRES_DB: awx
+
+- name: Start rabbitmq
+  docker_container:
+    name: awx_rabbitmq
+    image: "{{ awx_rabbitmq_image }}:{{ awx_rabbitmq_version }}"
+    env:
+      RABBITMQ_DEFAULT_VHOST: awx
+
+- name: Start memcached
+  docker_container:
+    name: awx_memcached
+    image: "{{ awx_memcached_image }}:{{ awx_memcached_version }}"
+
+- name: Start AWX web interface
+  docker_container:
+    name: awx_web
+    image: "{{ awx_web_image }}:{{ awx_version }}"
+    links:
+      - awx_rabbitmq:rabbitmq
+      - awx_memcached:memcached
+      - awx_postgres:postgres
+    ports:
+      - "{{ awx_web_port }}:8052"
+    volumes:
+      - "{{ awx_folder }}/projects:/var/lib/awx/projects:z"
+      - "{{ awx_folder }}/inventories:/var/lib/awx/inventories:Z"
+    hostname: awx
+    env:
+      SECRET_KEY: "{{ awx_secret_key }}"
+      DATABASE_USER: "{{ awx_postgres_user }}"
+      DATABASE_PASSWORD: "{{ awx_postgres_pass }}"
+      DATABASE_NAME: awx
+      DATABASE_PORT: 5432
+      DATABASE_HOST: postgres
+      RABBITMQ_USER: "{{ awx_rabbitmq_user }}"
+      RABBITMQ_PASSWORD: "{{ awx_rabbitmq_pass }}"
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_VHOST: awx
+      MEMCACHED_HOST: memcached
+      MEMCACHED_PORT: 11211
+
+- name: Start AWX task runner
+  docker_container:
+    name: awx_task
+    image: "{{ awx_task_image }}:{{ awx_version }}"
+    volumes:
+      - "{{ awx_folder }}/projects:/var/lib/awx/projects:z"
+    links:
+      - awx_rabbitmq:rabbitmq
+      - awx_memcached:memcached
+      - awx_postgres:postgres
+      - awx_web:awxweb
+    hostname: awx
+    env:
+      SECRET_KEY: "{{ awx_secret_key }}"
+      DATABASE_USER: "{{ awx_postgres_user }}"
+      DATABASE_PASSWORD: "{{ awx_postgres_pass }}"
+      DATABASE_NAME: awx
+      DATABASE_PORT: 5432
+      DATABASE_HOST: postgres
+      RABBITMQ_USER: "{{ awx_rabbitmq_user }}"
+      RABBITMQ_PASSWORD: "{{ awx_rabbitmq_pass }}"
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_VHOST: awx
+      MEMCACHED_HOST: memcached
+      MEMCACHED_PORT: 11211

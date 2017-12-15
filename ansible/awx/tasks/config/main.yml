@@ -1,0 +1,16 @@
+---
+- name: Get auth token
+  uri:
+    url: "http://localhost:{{ awx_web_port }}/api/v2/authtoken/"
+    method: POST
+    body: '{"username":"admin","password":"password"}'
+    headers:
+      Content-Type: application/json
+  register: auth
+
+- name: Cleanup demo items
+  include_tasks: clean.yml
+
+- name: Create default items
+  include_tasks: default.yml
+  

@@ -1,0 +1,15 @@
+addusers:
+  userlist:
+    - username: testadmin
+      password: password
+      groups:
+        - testadmin
+        - root
+        - users
+      primary_group: testadmin
+    - username: testuser
+      password: password
+      groups:
+        - testuser
+        - users
+      primary_group: testuser

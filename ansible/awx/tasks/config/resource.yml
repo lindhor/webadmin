@@ -1,0 +1,36 @@
+---
+- name: "Update {{ resource.name }}"
+  uri:
+    url: "http://localhost:{{ awx_web_port }}/api/v2/{{ resource.put_path }}/"
+    body_format: json
+    body: "{{ resource.body }}"
+    method: PUT
+    status_code: 200,201
+    headers:
+      Content-Type: application/json
+      Authorization: "Token {{ auth.json.token }}"
+  register: resource_put
+  failed_when: false
+  changed_when: resource_put.status == 201
+
+- name: Save result from update action
+  set_fact: { "{{ resource.register }}": "{{ resource_put }}" }
+  when: resource.register is defined
+
+- name: "Create {{ resource.name }} when missing"
+  uri:
+    url: "http://localhost:{{ awx_web_port }}/api/v2/{{ resource.post_path }}/"
+    body_format: json
+    body: "{{ resource.body }}"
+    method: POST
+    status_code: 201
+    headers:
+      Content-Type: application/json
+      Authorization: "Token {{ auth.json.token }}"
+  register: resource_post
+  changed_when: true
+  when: resource_put.status == 404
+
+- name: Save result from create action
+  set_fact: { "{{ resource.register }}": "{{ resource_post }}" }
+  when: resource.register is defined and resource_post | changed
