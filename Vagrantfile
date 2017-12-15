@@ -9,11 +9,12 @@ Vagrant.configure('2') do |config|
   config.ssh.pty = true
   config.vm.box = 'centos/7'
 
-  config.vm.define 'master', primary: true do |c|
-    c.vm.hostname = 'master.local'
+  config.vm.define 'server', primary: true do |c|
+    c.vm.hostname = 'server.local'
     c.vm.network 'forwarded_port', guest: 8000, host: 8000
+    c.vm.network 'forwarded_port', guest: 80, host: 8080
     c.vm.provider 'virtualbox' do |v, _override|
-      v.name = 'master'
+      v.name = 'server'
       v.cpus = '2'
       v.memory = '4096'
       v.linked_clone = true
@@ -21,18 +22,12 @@ Vagrant.configure('2') do |config|
       v.customize ['modifyvm', :id, '--draganddrop', 'bidirectional']
       v.customize ['modifyvm', :id, '--vram', '32']
     end
-    c.vm.provision :ansible do |ansible|
-      ansible.playbook = 'ansible/site.yml'
-      ansible.become = true
-      ansible.verbose = false
-      ansible.limit = :all
-    end
   end
 
-  config.vm.define 'node', primary: true do |c|
-    c.vm.hostname = 'node.local'
+  config.vm.define 'client' do |c|
+    c.vm.hostname = 'client.local'
     c.vm.provider 'virtualbox' do |v, _override|
-      v.name = 'node'
+      v.name = 'client'
       v.cpus = '1'
       v.memory = '2048'
       v.linked_clone = true
@@ -40,5 +35,15 @@ Vagrant.configure('2') do |config|
       v.customize ['modifyvm', :id, '--draganddrop', 'bidirectional']
       v.customize ['modifyvm', :id, '--vram', '32']
     end
+  end
+
+  config.vm.provision :ansible do |ansible|
+    ansible.playbook = 'ansible/site.yml'
+    ansible.become = true
+    ansible.verbose = false
+    ansible.groups = {
+      'ajentimaster' => ['server'],
+      'ajentinode' => ['client']
+    }
   end
 end
