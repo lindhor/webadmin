@@ -35,15 +35,16 @@ Vagrant.configure('2') do |config|
       v.customize ['modifyvm', :id, '--draganddrop', 'bidirectional']
       v.customize ['modifyvm', :id, '--vram', '32']
     end
-  end
 
-  config.vm.provision :ansible do |ansible|
-    ansible.playbook = 'ansible/site.yml'
-    ansible.become = true
-    ansible.verbose = false
-    ansible.groups = {
-      'master' => ['server'],
-      'node' => ['client']
-    }
+    # Provision when last node has been started
+    c.vm.provision :ansible do |ansible|
+      ansible.playbook = 'ansible/site.yml'
+      ansible.become = true
+      ansible.verbose = false
+      ansible.groups = {
+        'master' => ['server'],
+        'node' => ['client']
+      }
+    end
   end
 end

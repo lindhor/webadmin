@@ -5,10 +5,14 @@
     - docker
     - addusers
     - ajenti
+  tags: all
+
 - hosts: all
   roles:
     - ajenti-plugins
   tags: update
+
 - hosts: master
   roles:
     - awx
+  tags: master
