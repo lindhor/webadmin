@@ -1,14 +1,22 @@
+- name: Create destination directory for plugins
+  file:
+    path: "{{ ajentiplugins.plugindir }}"
+    state: directory
+
 - name: Copy plugins
   copy:
     src: ../../../plugins/
-    dest: "{{ ajenti-plugins.plugindirs }}"
+    dest: "{{ ajentiplugins.plugindir }}"
 
 - name: Install plugin dependencies
-  shell: make bower
-# ajenti-dev-multitool --bower install
+#  shell: make bower
+  shell: ajenti-dev-multitool --bower install
+  args:
+    chdir: "{{ item }}"
+  with_fileglob: "{{ ajentiplugins.plugindir }}/*"
 
 - name: Install plugin dependencies
   shell: "ajenti-dev-multitool --build"
   args:
     chdir: "{{ item }}"
-  with_fileglob: "{{ ajenti-plugins.plugindirs }}"
+  with_fileglob: "{{ ajentiplugins.plugindir }}/*"

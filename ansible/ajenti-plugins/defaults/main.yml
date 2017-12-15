@@ -1,2 +1,2 @@
-ajenti-plugins:
-  plugindir: ./
+ajentiplugins:
+  plugindir: /ajentiplugins
