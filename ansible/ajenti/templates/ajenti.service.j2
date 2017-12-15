@@ -1,0 +1,11 @@
+[Unit]
+Description=Ajenti panel
+After=network.target
+
+[Service]
+Type=forking
+PIDFile=/var/run/ajenti.pid
+ExecStart=$(which python) $(which ajenti-panel) -d
+
+[Install]
+WantedBy=multi-user.target

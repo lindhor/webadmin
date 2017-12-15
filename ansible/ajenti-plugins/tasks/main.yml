@@ -1,0 +1,13 @@
+- name: Copy plugins
+  copy:
+    src: ../../../plugins/
+    dest: "{{ ajenti-plugins.plugindirs }}"
+
+- name: Install plugin dependencies
+  shell: make bower
+# ajenti-dev-multitool --bower install
+
+- name: Install plugin dependencies
+  shell: ajenti-dev-multitool --build
+    chdir: "{{ item }}"
+  with_fileglob: "{{ ajenti-plugins.plugindirs }}"

@@ -1,6 +1,8 @@
 ---
 - hosts: all
   roles:
+    - prereq
+    - docker
     - addusers
     - ajenti
     - awx

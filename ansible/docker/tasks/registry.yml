@@ -1,0 +1,12 @@
+---
+- name: Create directory for custom certificate
+  file:
+    path: "/etc/docker/certs.d/{{ docker_custom_registry_name }}"
+    state: directory
+
+- name: Download custom CA certificate
+  get_url:
+    url: "{{ docker_custom_registry_ca }}"
+    dest: /etc/docker/certs.d/{{ docker_custom_registry_name }}/ca.crt
+    remote_src: yes
+  notify: Restart Docker

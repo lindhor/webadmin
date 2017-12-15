@@ -21,22 +21,6 @@ Vagrant.configure('2') do |config|
       v.customize ['modifyvm', :id, '--draganddrop', 'bidirectional']
       v.customize ['modifyvm', :id, '--vram', '32']
     end
-    c.vm.provision 'shell', \
-                   name: 'install prerequisites', \
-                   path: 'install-prereq.sh'
-    # c.vm.provision 'shell', \
-    #                name: 'install ajenti', \
-    #                path: 'install-ajenti.sh'
-    # c.vm.provision 'shell', \
-    #                name: 'install ajenti build tools', \
-    #                path: 'install-ajenti-build-tools.sh'
-    # c.vm.provision 'shell', \
-    #                name: 'install ajenti plugins', \
-    #                path: 'install-ajenti-plugins.sh'
-    c.vm.provision 'shell', \
-                   name: 'install ansible', \
-                   inline: 'sudo pip install ansible'
-
     c.vm.provision :ansible do |ansible|
       ansible.playbook = 'ansible/site.yml'
       ansible.become = true
@@ -49,8 +33,8 @@ Vagrant.configure('2') do |config|
     c.vm.hostname = 'node.local'
     c.vm.provider 'virtualbox' do |v, _override|
       v.name = 'node'
-      v.cpus = '2'
-      v.memory = '4096'
+      v.cpus = '1'
+      v.memory = '2048'
       v.linked_clone = true
       v.customize ['modifyvm', :id, '--clipboard', 'bidirectional']
       v.customize ['modifyvm', :id, '--draganddrop', 'bidirectional']

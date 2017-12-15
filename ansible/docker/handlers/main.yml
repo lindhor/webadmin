@@ -1,0 +1,7 @@
+- name: Update CA Trust
+  command: update-ca-trust
+
+- name: Restart Docker
+  service:
+    name: "{{ docker_package_name }}"
+    state: restarted

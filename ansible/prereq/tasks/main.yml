@@ -1,0 +1,38 @@
+- name: Use epel repo
+  yum:
+    name: epel-release
+    state: present
+
+- name: Install yum packages
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ prereq.packages.yum }}"
+
+- name: Upgrade pip
+  pip:
+    name: pip
+    extra_args: --upgrade
+
+- name: Install pip packages
+  pip:
+    name: "{{ item }}"
+    state: present
+    extra_args: --upgrade
+  with_items: "{{ prereq.packages.pip }}"
+
+- name: Install pip packages
+  pip:
+    name: "{{ item }}"
+    state: forcereinstall
+    extra_args: --upgrade
+  with_items:
+    - urllib3
+    - docker-py
+
+- name: Install npm packages
+  npm:
+    name: "{{ item }}"
+    state: present
+    global: yes
+  with_items: "{{ prereq.packages.npm }}"

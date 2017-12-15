@@ -1,0 +1,39 @@
+---
+- name: Remove conflicting packages
+  vars:
+    packages_to_remove:
+      docker: [docker-latest]
+      docker-latest: [docker]
+  package:
+    name: "{{ item }}"
+    state: absent
+  with_items: "{{ packages_to_remove[docker_package_name] }}" 
+  when: ansible_pkg_mgr != 'unknown' and docker_remove_conflicting_packages
+
+- name: Install packages
+  package:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - epel-release
+    - "{{ docker_package_name }}"
+    - python-docker-py
+  when: ansible_pkg_mgr != 'unknown'
+
+- name: Configure docker
+  template:
+    src: daemon.json.j2
+    dest: "/etc/{{ docker_package_name }}/daemon.json"
+  when: docker_daemon_config | default('') != ''
+
+- include_tasks: registry.yml
+  when: docker_custom_registry
+
+- name: Flush handlers
+  meta: flush_handlers
+
+- name: Start docker daemon
+  service:
+    name: "{{ docker_package_name }}"
+    state: started
+    enabled: yes
