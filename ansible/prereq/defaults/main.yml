@@ -15,6 +15,7 @@ prereq:
       - ntpdate
       - nodejs
       - git
+      - openldap-devel
     pip:
       - wheel
       - setuptools

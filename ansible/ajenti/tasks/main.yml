@@ -1,45 +1,62 @@
 ---
-- name: download rpm to use Ajenti repo
-  get_url:
-    url: "http://repo.ajenti.org/ajenti-repo-{{ ajenti.version }}.noarch.rpm"
-    dest: "/root/ajenti-repo-{{ ajenti.version }}.noarch.rpm"
+# - name: download rpm to use Ajenti repo
+#   get_url:
+#     url: "http://repo.ajenti.org/ajenti-repo-{{ ajenti.version }}.noarch.rpm"
+#     dest: "/root/ajenti-repo-{{ ajenti.version }}.noarch.rpm"
 
-- name: install Ajenti repo
-  yum:
-    name: /root/ajenti-repo-{{ ajenti.version }}.noarch.rpm
-    state: present
+# - name: install Ajenti repo
+#   yum:
+#     name: /root/ajenti-repo-{{ ajenti.version }}.noarch.rpm
+#     state: present
 
-- name: install Ajenti
-  yum:
-    name: ajenti
-    state: present
-  notify: restart ajenti
-  when: ajenti.install
+# - name: install Ajenti
+#   yum:
+#     name: ajenti
+#     state: present
+#   notify: restart ajenti
+#   when: ajenti.install
 
-- name: install Ajenti
+- name: install Ajenti v1
   pip:
     name: "{{ item }}"
     state: present
   with_items:
     - ajenti-dev-multitool
-#     - ajenti-panel
-#     - ajenti.plugin.dashboard
-#     - ajenti.plugin.settings
-#     - ajenti.plugin.plugins
-#     - ajenti.plugin.notepad
-#     - ajenti.plugin.terminal
-#     - ajenti.plugin.filemanager
-#     - ajenti.plugin.packages
-#     - ajenti.plugin.services
-#
-# - name: Create Ajenti service
-#   template:
-#     src: ajenti.service.j2
-#     dest: /lib/systemd/system/ajenti.service
-#
-# - name: enable service httpd and ensure it is not masked
-#   systemd:
-#     name: ajenti
-#     enabled: yes
-#     state: started
-#     daemon_reload: yes
+    - ajenti
+  when:
+    - ajenti.version == 1
+    - ajenti.install
+
+- name: install Ajenti v2
+  pip:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - ajenti-panel
+    - ajenti.plugin.dashboard
+    - ajenti.plugin.settings
+    - ajenti.plugin.plugins
+    - ajenti.plugin.notepad
+    - ajenti.plugin.terminal
+    - ajenti.plugin.filemanager
+    - ajenti.plugin.packages
+    - ajenti.plugin.services
+  when:
+    - ajenti.version == 2
+    - ajenti.install
+
+- name: Create Ajenti service
+  template:
+    src: ajenti.service.j2
+    dest: /lib/systemd/system/ajenti.service
+  when:
+    - ajenti.install
+
+- name: enable Ajenti service
+  systemd:
+    name: ajenti
+    enabled: yes
+    state: started
+    daemon_reload: yes
+  when:
+    - ajenti.install

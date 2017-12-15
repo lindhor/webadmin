@@ -1,6 +1,7 @@
 TODO
 ----
 
+- Installera via pip istf rpm
 - Kontrollera att bower installerar Chart.js för demo3
 - Starta ajenti
 - Utvärdera v1 mot v2
