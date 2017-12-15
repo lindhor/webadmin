@@ -42,8 +42,8 @@ Vagrant.configure('2') do |config|
     ansible.become = true
     ansible.verbose = false
     ansible.groups = {
-      'ajentimaster' => ['server'],
-      'ajentinode' => ['client']
+      'master' => ['server'],
+      'node' => ['client']
     }
   end
 end

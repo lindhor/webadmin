@@ -18,9 +18,6 @@ prereq:
       - wheel
       - setuptools
       - distribute
-      - urllib3
-      - requests
-      - docker-py
       - ansible
     npm:
       - bower

@@ -21,15 +21,6 @@
     extra_args: --upgrade
   with_items: "{{ prereq.packages.pip }}"
 
-- name: Install pip packages
-  pip:
-    name: "{{ item }}"
-    state: forcereinstall
-    extra_args: --upgrade
-  with_items:
-    - urllib3
-    - docker-py
-
 - name: Install npm packages
   npm:
     name: "{{ item }}"

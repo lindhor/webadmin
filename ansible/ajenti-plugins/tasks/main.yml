@@ -8,6 +8,7 @@
 # ajenti-dev-multitool --bower install
 
 - name: Install plugin dependencies
-  shell: ajenti-dev-multitool --build
+  shell: "ajenti-dev-multitool --build"
+  args:
     chdir: "{{ item }}"
   with_fileglob: "{{ ajenti-plugins.plugindirs }}"

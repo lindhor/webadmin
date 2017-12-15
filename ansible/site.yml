@@ -4,7 +4,11 @@
     - prereq
     - docker
     - addusers
-- hosts: ajentimaster
-  roles:
     - ajenti
+- hosts: all
+  roles:
+    - ajenti-plugins
+  tags: update
+- hosts: master
+  roles:
     - awx
