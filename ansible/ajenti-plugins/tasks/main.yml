@@ -1,3 +1,8 @@
+- name: Remove existing plugins
+  file:
+    path: "{{ ajentiplugins.plugindir }}"
+    state: absent
+
 - name: Create destination directory for plugins
   file:
     path: "{{ ajentiplugins.plugindir }}"
@@ -8,15 +13,22 @@
     src: ../../../plugins/
     dest: "{{ ajentiplugins.plugindir }}"
 
+- name: List available plugins
+  shell: "ls -d -1 {{ ajentiplugins.plugindir }}/*/"
+  register: ajentiplugins_available_plugins
+  changed_when: false
+
 - name: Install plugin dependencies
 #  shell: make bower
   shell: ajenti-dev-multitool --bower install
   args:
     chdir: "{{ item }}"
-  with_fileglob: "{{ ajentiplugins.plugindir }}/*"
+  with_items: "{{ ajentiplugins_available_plugins.stdout_lines }}"
+  when: ajentiplugins_available_plugins.stdout_lines is defined
 
-- name: Install plugin dependencies
+- name: Build plugins
   shell: "ajenti-dev-multitool --build"
   args:
     chdir: "{{ item }}"
-  with_fileglob: "{{ ajentiplugins.plugindir }}/*"
+  with_items: "{{ ajentiplugins_available_plugins.stdout_lines }}"
+  when: ajentiplugins_available_plugins.stdout_lines is defined

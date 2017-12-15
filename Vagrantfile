@@ -21,7 +21,7 @@ end
 # Configure VirtualBox settings
 def configure_virtualbox(vbox, override)
   override.vm.box = 'centos/7'
-  vbox.memory = 4096
+  vbox.memory = 2048
   vbox.cpus = '1'
   vbox.linked_clone = true
   vbox.customize ['modifyvm', :id, '--clipboard', 'bidirectional']

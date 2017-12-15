@@ -1,8 +1,0 @@
----
-name: testplug
-resources:
-  - 'resources/vendor/jquery/dist/jquery.min.js'  # Bower component
-  - 'resources/css/animations.less'               # Styles
-  - 'resources/js/core/filters.coffee'            # JS
-  - 'resources/partial/index.html'                # HTML
-  - 'ng:moduleName'                               # Special syntax for publishing an AngularJS module.

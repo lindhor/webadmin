@@ -16,11 +16,12 @@
   notify: restart ajenti
   when: ajenti.install
 
-# - name: install Ajenti
-#   pip:
-#     name: "{{ item }}"
-#     state: present
-#   with_items:
+- name: install Ajenti
+  pip:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - ajenti-dev-multitool
 #     - ajenti-panel
 #     - ajenti.plugin.dashboard
 #     - ajenti.plugin.settings
@@ -30,7 +31,6 @@
 #     - ajenti.plugin.filemanager
 #     - ajenti.plugin.packages
 #     - ajenti.plugin.services
-#     - ajenti-dev-multitool
 #
 # - name: Create Ajenti service
 #   template:
