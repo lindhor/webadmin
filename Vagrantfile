@@ -3,48 +3,69 @@
 # user: root
 # pwd: admin
 
-# rubocop:disable Metrics/BlockLength
-Vagrant.configure('2') do |config|
-  config.vm.synced_folder '.', '/vagrant'
-  config.ssh.pty = true
-  config.vm.box = 'centos/7'
+NODES = 2
 
-  config.vm.define 'server', primary: true do |c|
-    c.vm.hostname = 'server.local'
-    c.vm.network 'forwarded_port', guest: 8000, host: 8000
-    c.vm.network 'forwarded_port', guest: 80, host: 8080
-    c.vm.provider 'virtualbox' do |v, _override|
-      v.name = 'server'
-      v.cpus = '2'
-      v.memory = '4096'
-      v.linked_clone = true
-      v.customize ['modifyvm', :id, '--clipboard', 'bidirectional']
-      v.customize ['modifyvm', :id, '--draganddrop', 'bidirectional']
-      v.customize ['modifyvm', :id, '--vram', '32']
+# define vagrant instances
+Vagrant.configure('2') do |config|
+  config.vm.provider(:virtualbox) { |a, b| configure_virtualbox(a, b) }
+  config.vm.synced_folder '.', '/vagrant', disabled: true
+  config.ssh.pty = true
+  (1..NODES).each do |i|
+    config.vm.define fqdn(i), primary: i == 1 do |n|
+      configure_instance n, i
+      provision_system(n) if i == NODES
     end
   end
+end
 
-  config.vm.define 'client' do |c|
-    c.vm.hostname = 'client.local'
-    c.vm.provider 'virtualbox' do |v, _override|
-      v.name = 'client'
-      v.cpus = '1'
-      v.memory = '2048'
-      v.linked_clone = true
-      v.customize ['modifyvm', :id, '--clipboard', 'bidirectional']
-      v.customize ['modifyvm', :id, '--draganddrop', 'bidirectional']
-      v.customize ['modifyvm', :id, '--vram', '32']
-    end
+# Configure VirtualBox settings
+def configure_virtualbox(vbox, override)
+  override.vm.box = 'centos/7'
+  vbox.memory = 4096
+  vbox.cpus = '1'
+  vbox.linked_clone = true
+  vbox.customize ['modifyvm', :id, '--clipboard', 'bidirectional']
+  vbox.customize ['modifyvm', :id, '--draganddrop', 'bidirectional']
+  vbox.customize ['modifyvm', :id, '--vram', '32']
+end
 
-    # Provision when last node has been started
-    c.vm.provision :ansible do |ansible|
-      ansible.playbook = 'ansible/site.yml'
-      ansible.become = true
-      ansible.verbose = false
-      ansible.groups = {
-        'master' => ['server'],
-        'node' => ['client']
-      }
-    end
+# Configure a given instance
+def configure_instance(node, i)
+  node.vm.hostname = fqdn(i)
+  network_ports node, i
+end
+
+def network_ports(node, i)
+  baseport = 8000 # 8000, 8100...
+  node.vm.network 'forwarded_port',
+                  guest: baseport,
+                  host: baseport + 0 + (i - 1) * 100
+  baseport = 80 # 8080, 8180...
+  node.vm.network 'forwarded_port',
+                  guest: baseport,
+                  host: baseport + 8000 + (i - 1) * 100
+end
+
+# Get the hostname for a given node number
+def host(i)
+  "node#{i}"
+end
+
+# Get the FQDN for a given node number
+def fqdn(i)
+  "#{host(i)}.local"
+end
+
+# Provision the whole system
+def provision_system(node)
+  node.vm.provision :ansible do |ansible|
+    ansible.playbook = 'ansible/site.yml'
+    ansible.become = true
+    ansible.verbose = false
+    ansible.limit = :all
+    ansible.groups = {
+      'master' => [fqdn(1)],
+      'node' => [fqdn(2)]
+    }
   end
 end
