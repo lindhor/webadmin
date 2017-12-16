@@ -31,7 +31,6 @@
     name: "{{ item }}"
     state: present
   with_items:
-    - ajenti-dev-multitool
     - ajenti
   when:
     - ajenti.version == 1
@@ -70,3 +69,10 @@
     daemon_reload: yes
   when:
     - ajenti.install
+
+- name: install Ajenti multitool
+  pip:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - ajenti-dev-multitool
