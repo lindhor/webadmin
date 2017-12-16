@@ -27,6 +27,7 @@
     dest: /etc/ajenti/config.json
   when:
     - ajenti.version == 1
+  notify: restart ajenti
 
 - name: create Ajenti v2 configuration file
   template:
@@ -34,6 +35,7 @@
     dest: /etc/ajenti/config.yml
   when:
     - ajenti.version == 2
+  notify: restart ajenti
 
 - name: install Ajenti v1
   pip:
@@ -44,6 +46,7 @@
   when:
     - ajenti.version == 1
     - ajenti.install
+  notify: restart ajenti
 
 - name: install Ajenti v2
   pip:
@@ -62,22 +65,25 @@
   when:
     - ajenti.version == 2
     - ajenti.install
+  notify: restart ajenti
 
-- name: Create Ajenti service
+- name: Create Ajenti v1 service
   template:
     src: ajenti.service.v1.j2
     dest: /lib/systemd/system/ajenti.service
   when:
     - ajenti.version == 1
     - ajenti.install
+  notify: restart ajenti
 
-- name: Create Ajenti service
+- name: Create Ajenti v2 service
   template:
     src: ajenti.service.v2.j2
     dest: /lib/systemd/system/ajenti.service
   when:
     - ajenti.version == 2
     - ajenti.install
+  notify: restart ajenti
 
 - name: enable Ajenti service
   systemd:
