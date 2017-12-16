@@ -21,10 +21,19 @@
     path: /etc/ajenti
     state: directory
 
-- name: create Ajenti configuration file
+- name: create Ajenti v1 configuration file
   template:
-    src: config.yml.j2
+    src: config.v1.json.j2
+    dest: /etc/ajenti/config.json
+  when:
+    - ajenti.version == 1
+
+- name: create Ajenti v2 configuration file
+  template:
+    src: config.v2.yml.j2
     dest: /etc/ajenti/config.yml
+  when:
+    - ajenti.version == 2
 
 - name: install Ajenti v1
   pip:
@@ -56,9 +65,18 @@
 
 - name: Create Ajenti service
   template:
-    src: ajenti.service.j2
+    src: ajenti.service.v1.j2
     dest: /lib/systemd/system/ajenti.service
   when:
+    - ajenti.version == 1
+    - ajenti.install
+
+- name: Create Ajenti service
+  template:
+    src: ajenti.service.v2.j2
+    dest: /lib/systemd/system/ajenti.service
+  when:
+    - ajenti.version == 2
     - ajenti.install
 
 - name: enable Ajenti service
