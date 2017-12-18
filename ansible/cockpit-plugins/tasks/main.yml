@@ -1,0 +1,37 @@
+- name: Remove existing plugins
+  file:
+    path: /home/vagrant/.local/share/cockpit
+    state: absent
+
+- name: Remove existing plugins
+  file:
+    path: "{{ cockpitplugins.plugindir }}"
+    state: absent
+
+- name: Create destination directory for plugins
+  file:
+    path: "{{ cockpitplugins.plugindir }}"
+    state: directory
+
+- name: Copy plugins
+  copy:
+    src: ../../../plugins/cockpit/
+    dest: "{{ cockpitplugins.plugindir }}"
+
+- name: List available plugins
+  shell: "ls -d -1 {{ cockpitplugins.plugindir }}/*/"
+  register: cockpitplugins_available_plugins
+  changed_when: false
+
+- name: Create plugin directory for development
+  file:
+    path: /home/vagrant/.local/share/cockpit
+    state: present
+
+- name: link plugins
+  file:
+    src: "{{ cockpitplugins.plugindir }}/{{ item }}"
+    dest: "/home/vagrant/.local/share/cockpit/{{ item }}"
+    state: link
+  with_items: "{{ cockpitplugins_available_plugins.stdout_lines }}"
+  when: cockpitplugins_available_plugins.stdout_lines is defined

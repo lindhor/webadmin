@@ -1,0 +1,19 @@
+- name: Remove existing plugins
+  file:
+    path: "{{ webminplugins.plugindir }}"
+    state: absent
+
+- name: Create destination directory for plugins
+  file:
+    path: "{{ webminplugins.plugindir }}"
+    state: directory
+
+- name: Copy plugins
+  copy:
+    src: ../../../plugins/webmin/
+    dest: "{{ webminplugins.plugindir }}"
+
+- name: List available plugins
+  shell: "ls -d -1 {{ webminplugins.plugindir }}/*/"
+  register: webminplugins_available_plugins
+  changed_when: false

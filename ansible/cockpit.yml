@@ -1,6 +1,0 @@
----
-- hosts: all
-  roles:
-    - addusers
-    - cockpit
-  tags: all

@@ -68,6 +68,7 @@ To allow unix users to login, go to Webmin Users
 ### Cockpit development
 
 - `http://stef.thewalter.net/creating-plugins-for-the-cockpit-user-interface.html`
+- `https://github.com/cockpit-project/cockpit/tree/master/pkg/playground`
 
 ### Webmin development
 
