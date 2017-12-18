@@ -15,3 +15,6 @@
     name: webmin
     state: present
   notify: restart webmin
+
+- name: set webmin root password
+  shell: /usr/libexec/webmin/changepass.pl /etc/webmin root password

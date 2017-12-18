@@ -6,10 +6,12 @@ addusers:
         - testadmin
         - root
         - users
-      primary_group: root
+      primary_group: testadmin
     - username: testuser
       password: password
       groups:
         - testuser
         - users
       primary_group: testuser
+  sudoers:
+    - testadmin
