@@ -36,14 +36,31 @@ def configure_instance(node, i)
 end
 
 def network_ports(node, i)
+  # Ajenti
   baseport = 8000 # 8000, 8100...
   node.vm.network 'forwarded_port',
                   guest: baseport,
                   host: baseport + 0 + (i - 1) * 100
+  # AWX
   baseport = 80 # 8080, 8180...
   node.vm.network 'forwarded_port',
                   guest: baseport,
                   host: baseport + 8000 + (i - 1) * 100
+  # Cockpit
+  baseport = 9090 # 9090, 9190...
+  node.vm.network 'forwarded_port',
+                  guest: baseport,
+                  host: baseport + 0 + (i - 1) * 100
+  # Webmin
+  baseport = 10000 # 10000, 10100...
+  node.vm.network 'forwarded_port',
+                  guest: baseport,
+                  host: baseport + 0 + (i - 1) * 100
+  # Usermin
+  baseport = 20000 # 20000, 20100...
+  node.vm.network 'forwarded_port',
+                  guest: baseport,
+                  host: baseport + 0 + (i - 1) * 100
 end
 
 # Get the hostname for a given node number

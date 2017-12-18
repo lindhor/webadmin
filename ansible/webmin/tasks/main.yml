@@ -1,0 +1,17 @@
+- name: configure webmin repo
+  yum_repository:
+    name: webmin
+    description: Webmin Distribution Neutral
+    mirrorlist: https://download.webmin.com/download/yum/mirrorlist
+    state: present
+
+- name: add rpm signature for webmin
+  rpm_key:
+    state: present
+    key: http://www.webmin.com/jcameron-key.asc
+
+- name: install webmin
+  yum:
+    name: webmin
+    state: present
+  notify: restart webmin

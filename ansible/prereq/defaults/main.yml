@@ -16,6 +16,12 @@ prereq:
       - nodejs
       - git
       - openldap-devel
+      # webmin
+      - perl
+      - perl-Net-SSLeay
+      - openssl
+      - perl-IO-Tty
+      - perl-Encode-Detect
     pip:
       - wheel
       - setuptools

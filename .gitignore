@@ -1,2 +1,3 @@
 .vagrant
 **/site.retry
+ansible/*.retry

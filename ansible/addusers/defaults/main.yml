@@ -6,7 +6,7 @@ addusers:
         - testadmin
         - root
         - users
-      primary_group: testadmin
+      primary_group: root
     - username: testuser
       password: password
       groups:
