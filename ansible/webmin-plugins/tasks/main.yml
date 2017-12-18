@@ -13,3 +13,17 @@
     src: ../../../plugins/webmin/
     dest: "{{ webminplugins.plugindir }}"
   notify: restart webmin
+
+- name: List available plugins
+  shell: "ls {{ webminplugins.plugindir }}/"
+  register: webminplugins_available_plugins
+  changed_when: false
+
+- name: Remove existing versions of active plugins
+  file:
+    path: "{{ webminplugins.activeplugindir }}/{{ item }}"
+    state: absent
+  with_items: webminplugins_available_plugins.stdout
+
+- name: Activate plugins
+  shell: "cp -r {{ webminplugins.plugindir }}/* {{ webminplugins.activeplugindir }}"

@@ -1,2 +1,3 @@
 webminplugins:
   plugindir: /webminplugins
+  activeplugindir: /usr/libexec/webmin

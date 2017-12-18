@@ -25,6 +25,7 @@
   roles:
     - ajenti-plugins
   tags:
+    - ajenti-plugins
     - ajenti
     - update
 
@@ -32,6 +33,7 @@
   roles:
     - cockpit-plugins
   tags:
+    - cockpit-plugins
     - cockpit
     - update
 
@@ -39,6 +41,7 @@
   roles:
     - webmin-plugins
   tags:
+    - webmin-plugins
     - webmin
     - update
 
