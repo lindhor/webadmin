@@ -10,4 +10,4 @@ TODO
 - Utveckla realistiska exempel
 
 - Konfigurera AWX
-- Integrera Webmin?
+- Integrera Webmin & Cockpit?

@@ -9,5 +9,5 @@
     name: "{{ item.username }}"
     group: "{{ item.primary_group }}"
     groups: "{{ item.groups | default([]) }}"
-    password: "{{ item.password }}"
+    password: "{{ item.password | password_hash('sha512') }}"
   with_items: "{{ addusers.userlist }}"
