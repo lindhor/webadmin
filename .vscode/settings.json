@@ -3,6 +3,7 @@
     "testadmin",
     "testuser",
     "ajenti",
+    "ansible",
     "awx",
     "cockpit",
     "webmin"

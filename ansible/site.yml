@@ -24,11 +24,21 @@
 - hosts: all
   roles:
     - ajenti-plugins
-    - cockpit-plugins
-    - webmin-plugins
   tags:
     - ajenti
+    - update
+
+- hosts: all
+  roles:
+    - cockpit-plugins
+  tags:
     - cockpit
+    - update
+
+- hosts: all
+  roles:
+    - webmin-plugins
+  tags:
     - webmin
     - update
 

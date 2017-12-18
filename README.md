@@ -29,8 +29,8 @@ Run `vagrant destroy -f` to remove the two virtual machines.
 ## Reinstall
 
 - To reinstall all components on existing virtual machines run either `vagrant provision` or `./apply-ansible.sh`.
-- To reinstall specific tools, run `./install-*.sh`.
-- To update plugins, run `./update-plugins.sh`
+- To reinstall specific tools, run `./apply-ansible.sh tag`, where *tag* is prereq, ajenti, awx, cockpit, webmin... as defined in `site.yml`
+- To update plugins, run `./apply-ansible.sh update`
 
 ## Test users
 

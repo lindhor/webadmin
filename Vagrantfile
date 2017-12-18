@@ -8,7 +8,7 @@ NODES = 2
 # define vagrant instances
 Vagrant.configure('2') do |config|
   config.vm.provider(:virtualbox) { |a, b| configure_virtualbox(a, b) }
-  config.vm.synced_folder '.', '/vagrant', disabled: true
+  config.vm.synced_folder '.', '/vagrant', disabled: false
   config.ssh.pty = true
   (1..NODES).each do |i|
     config.vm.define fqdn(i), primary: i == 1 do |n|

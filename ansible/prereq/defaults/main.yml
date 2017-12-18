@@ -18,6 +18,8 @@ prereq:
       - nodejs
       - git
       - openldap-devel
+      - wget
+      - unzip
       # webmin
       - perl
       - perl-Net-SSLeay
