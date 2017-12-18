@@ -12,6 +12,7 @@
   copy:
     src: ../../../plugins/ajenti/
     dest: "{{ ajentiplugins.plugindir }}"
+  notify: restart ajenti
 
 - name: List available plugins
   shell: "ls -d -1 {{ ajentiplugins.plugindir }}/*/"

@@ -12,8 +12,4 @@
   copy:
     src: ../../../plugins/webmin/
     dest: "{{ webminplugins.plugindir }}"
-
-- name: List available plugins
-  shell: "ls -d -1 {{ webminplugins.plugindir }}/*/"
-  register: webminplugins_available_plugins
-  changed_when: false
+  notify: restart webmin

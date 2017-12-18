@@ -17,9 +17,10 @@
   copy:
     src: ../../../plugins/cockpit/
     dest: "{{ cockpitplugins.plugindir }}"
+  notify: restart cockpit
 
 - name: List available plugins
-  shell: "ls -d -1 {{ cockpitplugins.plugindir }}/*/"
+  shell: "ls {{ cockpitplugins.plugindir }}/"
   register: cockpitplugins_available_plugins
   changed_when: false
 
@@ -35,3 +36,4 @@
     state: link
   with_items: "{{ cockpitplugins_available_plugins.stdout_lines }}"
   when: cockpitplugins_available_plugins.stdout_lines is defined
+  notify: restart cockpit

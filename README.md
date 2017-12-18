@@ -1,5 +1,37 @@
 # README
 
+This is a project used to evaluate different tools for Linux web administration.
+
+- Ajenti
+- Webmin
+- Cockpit
+- AWX
+
+## Prerequisites
+
+To use this project you need the following installed
+
+- Vagrant 2.0.1+
+- VirtualBox 5.1.30+
+- Ansible 2.4.2.0+
+
+## Start up test environment
+
+The test environment is made up of two virtual machines, node1 and node2. node1 is a central management node and node2 a managed server.
+These are started via the command `vagrant up`.
+
+Tools that are used solely for local management are installed on all nodes.
+
+## Remove test environment
+
+Run `vagrant destroy -f` to remove the two virtual machines.
+
+## Reinstall
+
+- To reinstall all components on existing virtual machines run either `vagrant provision` or `./apply-ansible.sh`.
+- To reinstall specific tools, run `./install-*.sh`.
+- To update plugins, run `./update-plugins.sh`
+
 ## Test users
 
 ### Administrative user
