@@ -1,20 +1,11 @@
 ---
 - hosts: all
   roles:
-    - prereq
-    - docker
     - addusers
     - ajenti
-    - cockpit
-    - webmin
   tags: all
 
 - hosts: all
   roles:
     - ajenti-plugins
   tags: update
-
-- hosts: master
-  roles:
-    - awx
-  tags: master

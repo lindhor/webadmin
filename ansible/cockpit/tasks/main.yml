@@ -1,0 +1,10 @@
+- name: install cockpit
+  package:
+    name: cockpit
+    state: latest
+- name: enable Cockpit service
+  systemd:
+    name: cockpit.socket
+    enabled: yes
+    state: started
+    daemon_reload: yes
