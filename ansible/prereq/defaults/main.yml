@@ -1,6 +1,7 @@
 prereq:
   packages:
     yum:
+      # ajenti
       - gcc
       - python-devel
       - python-pip
@@ -11,6 +12,7 @@ prereq:
       - libjpeg-turbo-devel
       - libpng-devel
       - dbus-python
+      # ajenti dev
       - python-augeas
       - ntpdate
       - nodejs
@@ -22,12 +24,34 @@ prereq:
       - openssl
       - perl-IO-Tty
       - perl-Encode-Detect
+      # cockpit dev
+      - yum-utils
+      - curl
+      - expect
+      - libvirt
+      - libvirt-client
+      - libvirt-daemon
+      - libvirt-python
+      - python
+      - python-libguestfs
+      - python-lxml
+      - libguestfs-xfs
+      - python3
+      - libvirt-python3
+      - libguestfs-tools
+      - qemu
+      - qemu-kvm
+      - rpm-build
+      - rsync
+      - xz
     pip:
       - wheel
       - setuptools
       - distribute
+      # AWX
       - ansible
     npm:
+      # ajenti dev
       - bower
       - babel-cli
       - babel-preset-es2015
@@ -36,3 +60,5 @@ prereq:
       - coffee-script
       - angular-gettext-cli
       - angular-gettext-tools
+      # Cockpit dev
+      - webpack

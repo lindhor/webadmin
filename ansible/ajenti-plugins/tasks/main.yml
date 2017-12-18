@@ -10,7 +10,7 @@
 
 - name: Copy plugins
   copy:
-    src: ../../../plugins/
+    src: ../../../plugins/ajenti/
     dest: "{{ ajentiplugins.plugindir }}"
 
 - name: List available plugins
