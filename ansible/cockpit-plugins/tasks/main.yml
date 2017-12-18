@@ -26,7 +26,7 @@
 - name: Create plugin directory for development
   file:
     path: /home/vagrant/.local/share/cockpit
-    state: present
+    state: directory
 
 - name: link plugins
   file:

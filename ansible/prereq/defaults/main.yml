@@ -26,24 +26,24 @@ prereq:
       - perl-Encode-Detect
       # cockpit dev
       - yum-utils
-      - curl
-      - expect
-      - libvirt
-      - libvirt-client
-      - libvirt-daemon
-      - libvirt-python
-      - python
-      - python-libguestfs
-      - python-lxml
-      - libguestfs-xfs
-      - python3
-      - libvirt-python3
-      - libguestfs-tools
-      - qemu
-      - qemu-kvm
-      - rpm-build
-      - rsync
-      - xz
+      # - curl
+      # - expect
+      # - libvirt
+      # - libvirt-client
+      # - libvirt-daemon
+      # - libvirt-python
+      # - python
+      # - python-libguestfs
+      # - python-lxml
+      # - libguestfs-xfs
+      # - python3
+      # - libvirt-python3
+      # - libguestfs-tools
+      # - qemu
+      # - qemu-kvm
+      # - rpm-build
+      # - rsync
+      # - xz
     pip:
       - wheel
       - setuptools
