@@ -54,7 +54,12 @@ Run `vagrant destroy -f` to remove the two virtual machines.
 
 ### AWX
 
-- node 1: `https://localhost:80`
+- node 1: `http://localhost:8080`
+
+Uses internal authentication database by default. Initial login is:
+
+- user: admin
+- password: password
 
 ### Cockpit
 
