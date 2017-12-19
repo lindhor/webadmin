@@ -107,11 +107,17 @@ Plugins are developed in angular.js in combination with Python
 
 ### Cockpit development
 
-Plugins are developed in jquery
+Core developed in C. Plugins are developed in javascript, the majority in jquery, using PatternFly stylesheets.
 
 - `http://cockpit-project.org/guide/latest/development.html`
 - `http://stef.thewalter.net/creating-plugins-for-the-cockpit-user-interface.html`
 - `https://github.com/cockpit-project/cockpit/tree/master/pkg/playground`
+
+For system access (shell, dbus and rest) via the component `cockpit-bridge` see
+
+- `http://cockpit-project.org/blog/protocol-for-web-access-to-system-apis.html`
+- `http://cockpit-project.org/blog/making-rest-calls-from-javascript-in-cockpit.html`
+- `http://cockpit-project.org/blog/using-dbus-from-javascript-in-cockpit.html`
 
 ### Webmin development
 
