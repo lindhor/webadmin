@@ -11,9 +11,10 @@ This is a project used to evaluate different tools for Linux web administration.
 
 To use this project you need the following installed
 
-- Vagrant 2.0.1+
-- VirtualBox 5.1.30+
-- Ansible 2.4.2.0+
+- Vagrant 2.0.1+ (`https://www.vagrantup.com/downloads.html`)
+- Vagrant hosts plugin 2.8.0+ (`vagrant plugin install vagrant-hosts`)
+- VirtualBox 5.1.30+ (`https://www.virtualbox.org/wiki/Downloads`)
+- Ansible 2.4.2.0+ (`http://docs.ansible.com/ansible/latest/intro_installation.html`)
 
 ## Start up test environment
 
@@ -113,4 +114,4 @@ Plugins are developed in Perl (CGI)
 
 - `https://doxfer.webmin.com/Webmin/Module_Development`
 
-To show new plugins in the gui you need to grant access to it via *Webmin: Webmin Users: root: Available webmin modules* and re-login
+To show new plugins in the gui you need to grant access to it via *Webmin: Webmin Users: root: Available webmin modules* and refresh the browser.

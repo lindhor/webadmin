@@ -5,4 +5,4 @@ if [ $# -eq 0 ]; then
 else
   TAGS="--tags=$1"
 fi
-ansible-playbook -b -i .vagrant/provisioners/ansible/inventory/vagrant_ansible_inventory ansible/site.yml ${TAGS}
+ansible-playbook -v -b -i .vagrant/provisioners/ansible/inventory/vagrant_ansible_inventory ansible/site.yml ${TAGS}

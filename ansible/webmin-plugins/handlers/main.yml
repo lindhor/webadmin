@@ -1,7 +1,3 @@
 ---
 - name: restart webmin
-  service:
-    name: webmin
-    state: restarted
-    use: service
-    enabled: yes
+  shell: service webmin restart

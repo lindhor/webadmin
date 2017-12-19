@@ -75,6 +75,7 @@ end
 
 # Provision the whole system
 def provision_system(node)
+  node.vm.provision :hosts, :sync_hosts => true
   node.vm.provision :ansible do |ansible|
     ansible.playbook = 'ansible/site.yml'
     ansible.become = true
