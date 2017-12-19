@@ -95,7 +95,7 @@ To allow unix users to login, go to Webmin Users
 
 ### Ajenti development
 
-Plugins are developed in angular.js
+Plugins are developed in angular.js in combination with Python
 
 - `http://docs.ajenti.org/en/stable/dev/intro.html`
 
@@ -103,6 +103,7 @@ Plugins are developed in angular.js
 
 Plugins are developed in jquery
 
+- `http://cockpit-project.org/guide/latest/development.html`
 - `http://stef.thewalter.net/creating-plugins-for-the-cockpit-user-interface.html`
 - `https://github.com/cockpit-project/cockpit/tree/master/pkg/playground`
 
@@ -112,4 +113,4 @@ Plugins are developed in Perl (CGI)
 
 - `https://doxfer.webmin.com/Webmin/Module_Development`
 
-To show new plugins in the gui you need to grant access to it via *Webmin: Webmin Users: root: Available webmin modules* and relogin
+To show new plugins in the gui you need to grant access to it via *Webmin: Webmin Users: root: Available webmin modules* and re-login

@@ -26,6 +26,8 @@ prereq:
       - openssl
       - perl-IO-Tty
       - perl-Encode-Detect
+      # cockpit
+      - setroubleshoot-server
       # cockpit dev
       - yum-utils
       # - curl

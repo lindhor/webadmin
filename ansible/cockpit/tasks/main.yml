@@ -1,7 +1,24 @@
 - name: install cockpit
   package:
-    name: cockpit
+    name: "{{ item }}"
     state: latest
+  with_items:
+    - cockpit
+    - cockpit-system
+    - cockpit-storaged
+    - cockpit-machines
+    - cockpit-packagekit
+    - cockpit-pcp
+    - cockpit-selinux
+    - cockpit-subscriptions
+    - cockpit-docker
+#    - cockpit-kdump
+#    - cockpit-kubernetes
+    - cockpit-dashboard
+    - cockpit-sosreport
+    - cockpit-ws
+    - cockpit-tests
+
 - name: enable Cockpit service
   systemd:
     name: cockpit.socket
