@@ -54,6 +54,7 @@ prereq:
       - distribute
       # AWX
       - ansible
+      - docker-py
     npm:
       # ajenti dev
       - bower

@@ -17,7 +17,6 @@
   with_items:
     - epel-release
     - "{{ docker_package_name }}"
-    - python-docker-py
   when: ansible_pkg_mgr != 'unknown'
 
 - name: Configure docker
