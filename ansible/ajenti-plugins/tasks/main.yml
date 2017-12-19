@@ -19,17 +19,36 @@
   register: ajentiplugins_available_plugins
   changed_when: false
 
+- name: Look for bower dependencies
+  stat:
+    path: "{{ item }}bower.json" 
+  register: ajentiplugins_bower_file_stat
+  with_items: "{{ ajentiplugins_available_plugins.stdout_lines }}"
+  when:
+    - ajentiplugins_available_plugins.stdout_lines is defined
+
 - name: Install plugin dependencies
 #  shell: make bower
   shell: ajenti-dev-multitool --bower install
   args:
     chdir: "{{ item }}"
   with_items: "{{ ajentiplugins_available_plugins.stdout_lines }}"
-  when: ajentiplugins_available_plugins.stdout_lines is defined
+  when:
+    - ajentiplugins_available_plugins.stdout_lines is defined
+  register: ajentiplugins_install_bower
 
 - name: Build plugins
-  shell: "ajenti-dev-multitool --build"
+  shell: ajenti-dev-multitool --build
   args:
     chdir: "{{ item }}"
   with_items: "{{ ajentiplugins_available_plugins.stdout_lines }}"
   when: ajentiplugins_available_plugins.stdout_lines is defined
+  register: ajentiplugins_build
+
+# - name: dump vars
+#   template:
+#     src: dumpvar.json.j2
+#     dest: /dumpvar.json
+# - fetch:
+#     src: /dumpvar.json
+#     dest: /tmp/fetched
